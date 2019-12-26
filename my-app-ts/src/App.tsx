@@ -36,6 +36,13 @@ export default function App(): JSX.Element {
     setTodos(newTodos);
   };
 
+  //splice deletes starting at index and deletes 1 item from the array
+  const removeTodo = (index: number): void => {
+    const newTodos: ITodo[] = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+  };
+
   return (
     <Fragment>
       <h1>Todo List</h1>
@@ -52,7 +59,9 @@ export default function App(): JSX.Element {
         {todos.map((todo: ITodo, index: number) => {
           return (
             <Fragment key={index}>
-              <div>
+              <div
+                style={{ textDecoration: todo.complete ? 'line-through' : '' }}
+              >
                 <h1>{todo.text}</h1>
                 <button
                   type="button"
@@ -61,6 +70,14 @@ export default function App(): JSX.Element {
                   }}
                 >
                   {todo.complete ? 'Incomplete' : 'Complete'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    removeTodo(index);
+                  }}
+                >
+                  &times;
                 </button>
               </div>
             </Fragment>
